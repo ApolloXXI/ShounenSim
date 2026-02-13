@@ -8,36 +8,27 @@ import com.badlogic.ashley.core.Entity;
 import com.shounen.sim.components.ProfileComponent;
 import com.shounen.sim.components.StatsComponent;
 import com.shounen.sim.data.logic.RegenFactory;
+import com.shounen.sim.screens.CharacterCreationScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class ShounenSim extends Game {
     public Engine engine;
     public RegenFactory regenFactory;
+    public CharacterCreationScreen characterCreationScreen;
 
     @Override
     public void create() {
         engine = new Engine();
         regenFactory = new RegenFactory();
 
-        System.out.println("Simulation started");
+
+        System.out.println("Starting UI");
         System.out.println("--------------------------------------------------");
-
-        for(int i = 0; i < 5; i++) {
-            Entity character = regenFactory.createRandomCharacter();
-            engine.addEntity(character);
-
-            ProfileComponent profileComponent = character.getComponent(ProfileComponent.class);
-            StatsComponent statsComponent = character.getComponent(StatsComponent.class);
-
-            System.out.printf("Spawned: %s \n",  profileComponent.toString());
-            System.out.println(statsComponent.toString());
-            System.out.println("---------------------------------------");
-        }
+        this.setScreen(new CharacterCreationScreen(this));
     }
 
+    @Override
     public void render () {
-        ScreenUtils.clear(0, 0, 0, 1);
         super.render();
-        engine.update(Gdx.graphics.getDeltaTime());
     }
 }
