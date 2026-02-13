@@ -7,8 +7,15 @@ import com.shounen.sim.ShounenSim;
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
-        if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-        createApplication();
+        try {
+            if (StartupHelper.startNewJvmIfRequired()) return; // Keep this line if you have it!
+            createApplication();
+        } catch (Exception e) {
+            System.err.println("---------------------------------------------------");
+            System.err.println("🐺 CRASH DETECTED! HERE IS THE REAL ERROR: 🐺");
+            e.printStackTrace();
+            System.err.println("---------------------------------------------------");
+        }
     }
 
     private static Lwjgl3Application createApplication() {
